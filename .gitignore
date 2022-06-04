@@ -2,6 +2,10 @@
 __pycache__/
 *.py[cod]
 *$py.class
+# history ignore
+.history
+
+
 
 # C extensions
 *.so
@@ -104,9 +108,9 @@ celerybeat.pid
 # Environments
 .env
 .venv
-env/
-venv/
 ENV/
+venv/
+
 env.bak/
 venv.bak/
 
