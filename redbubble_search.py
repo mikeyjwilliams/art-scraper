@@ -39,27 +39,28 @@ from ENV import env
 def redbubble_search():
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     # url
-    driver.get('https://www.redbubble.com/auth/login')
+    driver.get('https://www.google.com')
 
-    username_input = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.ID, "ReduxFormInput1"))
+    dismiss_popup = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.CLASS_NAME, 'QlyBfb'))
     )
-    username_input.send_keys(env.redbubble_username)
+    dismiss = dismiss_popup.find_element(By.TAG_NAME, 'button')
+    dismiss.click()
 
-    password_input = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.ID, 'ReduxFormInput2'))
+    search_input = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.CLASS_NAME, "gLFyf gsfi"))
     )
-    password_input.send_keys(env.redbubble_password)
-    sleep(3)
+    search_input.send_keys('robot art')
 
-    login_button = WebDriverWait(driver, 10).until(
+    search_button = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable(
-            (By.LINK_TEXT, 'Log In'))
+            (By.CLASS_NAME, 'QCzoEc z1asCe MZy1Rb'))
     )
-    login_button.click()
-    sleep(3)
+    search_button.send_keys(Keys.ENTER)
+    # driver.switchTo().alert().dismiss()
+    # sleep(10)
 
-    driver.quit()
+    # driver.quit()
 
 
 redbubble_search()
