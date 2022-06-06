@@ -1,18 +1,18 @@
+import os
+from time import sleep
+
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from time import sleep
 
-from selenium.webdriver.firefox.service import Service  # firefox service
-from webdriver_manager.firefox import GeckoDriver  # firefox browser
-from selenium.webdriver.chrome.service import Service  # chrome service
-from webdriver_manager.chrome import ChromeDriverManager  # chrome browser
+from selenium.webdriver.firefox.service import Service
+from webdriver_manager.firefox import GeckoDriverManager
 
 # ENVIRONMENTAL VARIABLES
-from ENV import env
+# from ENV import env
 
 #   element = WebDriverWait(driver, 10).until(
 #         EC.presence_of_element_located((By.ID, "myDynamicElement"))
@@ -37,30 +37,39 @@ from ENV import env
 
 
 def redbubble_search():
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+
+    driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()))
     # url
-    driver.get('https://www.google.com')
-
-    dismiss_popup = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.CLASS_NAME, 'QlyBfb'))
+    url:str = 'https://www.redbubble.com'
+    key_phrase:str = 'robot art'
+    
+    
+    driver.get(url)
+    
+    lightbox = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.CLASS_NAME, 'preloaded_lightbox'))
     )
-    dismiss = dismiss_popup.find_element(By.TAG_NAME, 'button')
-    dismiss.click()
+    
+    lightbox.send_keys(Keys.ESCAPE)
 
-    search_input = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.CLASS_NAME, "gLFyf gsfi"))
+    search_query = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.NAME, 'query'))
     )
-    search_input.send_keys('robot art')
+    search_query.click()
+    search_query.send_keys(key_phrase)
+    
+    grid_of_items = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.ID, 'SearchResultsGrid'))
+    )
+    
+    
 
-    search_button = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable(
-            (By.CLASS_NAME, 'QCzoEc z1asCe MZy1Rb'))
-    )
-    search_button.send_keys(Keys.ENTER)
+    
+    search_query.send_keys(Keys.ENTER)
     # driver.switchTo().alert().dismiss()
-    # sleep(10)
+    sleep(7)
 
-    # driver.quit()
+    driver.quit()
 
 
 redbubble_search()
