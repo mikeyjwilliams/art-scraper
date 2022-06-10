@@ -38,21 +38,15 @@ from webdriver_manager.firefox import GeckoDriverManager
 # element_located_selection_state_to_be
 # alert_is_present
 
+results = []
+
 
 def redbubble_search():
-
     driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()))
-    # url
     url: str = 'https://www.redbubble.com'
     key_phrase: str = 'robot art'
 
     driver.get(url)
-
-    lightbox = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.CLASS_NAME, 'preloaded_lightbox'))
-    )
-
-    lightbox.send_keys(Keys.ESCAPE)
 
     search_query = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.NAME, 'query'))
@@ -60,15 +54,24 @@ def redbubble_search():
     search_query.click()
     search_query.send_keys(key_phrase)
 
-    grid_of_items = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.ID, 'SearchResultsGrid'))
-    )
-
     search_query.send_keys(Keys.ENTER)
     # driver.switchTo().alert().dismiss()
-    sleep(7)
+
+    title_text = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.ID, 'SearchResults'))
+    )
+    results.append(title_text.text)
+
+    sleep(3)
 
     driver.quit()
 
 
 redbubble_search()
+
+
+sleep(1)
+print('---------------')
+print('my findings are.')
+for finds in results:
+    print(finds)
