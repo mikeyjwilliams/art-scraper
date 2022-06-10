@@ -1,22 +1,23 @@
 from bs4 import BeautifulSoup
 from selenium import webdriver
+import selenium
+from selenium import webdriver
+from selenium.webdriver.firefox import options
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
 
-from selenium.webdriver.firefox.service import Service  # firefox service
-from webdriver_manager.firefox import GeckoDriver  # firefox browser
-from selenium.webdriver.chrome.service import Service  # chrome service
-from webdriver_manager.chrome import ChromeDriverManager  # chrome browser
+from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
+
 
 # ENVIRONMENTAL VARIABLES
-from ENV import env
+# from ENV import env
 
 #   element = WebDriverWait(driver, 10).until(
 #         EC.presence_of_element_located((By.ID, "myDynamicElement"))
-
+# )
 # title_is
 # title_contains
 # presence_of_element_located
@@ -37,30 +38,20 @@ from ENV import env
 
 
 def redbubble_search():
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-    # url
-    driver.get('https://www.google.com')
+    url = 'https://www.redbubble.com'
 
-    dismiss_popup = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.CLASS_NAME, 'QlyBfb'))
-    )
-    dismiss = dismiss_popup.find_element(By.TAG_NAME, 'button')
-    dismiss.click()
+    binary = FirefoxBinary('drivers/geckodriver.exe')
+    driver = webdriver.Firefox(firefox_binary=binary)
 
+    driver.get(url)
     search_input = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.CLASS_NAME, "gLFyf gsfi"))
+        EC.presence_of_element_located((By.NAME, 'query'))
     )
-    search_input.send_keys('robot art')
+    search_input.click()
+    # url
 
-    search_button = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable(
-            (By.CLASS_NAME, 'QCzoEc z1asCe MZy1Rb'))
-    )
-    search_button.send_keys(Keys.ENTER)
-    # driver.switchTo().alert().dismiss()
-    # sleep(10)
-
-    # driver.quit()
+    sleep(3)
+    driver.quit()
 
 
 redbubble_search()
