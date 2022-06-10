@@ -1,3 +1,6 @@
+import os
+from time import sleep
+
 from bs4 import BeautifulSoup
 from selenium import webdriver
 import selenium
@@ -7,10 +10,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from time import sleep
 
-from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
-
+from selenium.webdriver.firefox.service import Service
+from webdriver_manager.firefox import GeckoDriverManager
 
 # ENVIRONMENTAL VARIABLES
 # from ENV import env
@@ -38,19 +40,34 @@ from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 
 
 def redbubble_search():
-    url = 'https://www.redbubble.com'
 
-    binary = FirefoxBinary('drivers/geckodriver.exe')
-    driver = webdriver.Firefox(firefox_binary=binary)
+    driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()))
+    # url
+    url: str = 'https://www.redbubble.com'
+    key_phrase: str = 'robot art'
 
     driver.get(url)
-    search_input = WebDriverWait(driver, 10).until(
+
+    lightbox = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.CLASS_NAME, 'preloaded_lightbox'))
+    )
+
+    lightbox.send_keys(Keys.ESCAPE)
+
+    search_query = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.NAME, 'query'))
     )
-    search_input.click()
-    # url
+    search_query.click()
+    search_query.send_keys(key_phrase)
 
-    sleep(3)
+    grid_of_items = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.ID, 'SearchResultsGrid'))
+    )
+
+    search_query.send_keys(Keys.ENTER)
+    # driver.switchTo().alert().dismiss()
+    sleep(7)
+
     driver.quit()
 
 
