@@ -1,3 +1,3 @@
 # env examples
 
-GH-TOKEN = 
+GH_TOKEN =
