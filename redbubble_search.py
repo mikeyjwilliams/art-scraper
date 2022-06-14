@@ -1,15 +1,11 @@
-import os
 from time import sleep
 
-from bs4 import BeautifulSoup
 from selenium import webdriver
-import selenium
-from selenium import webdriver
-from selenium.webdriver.firefox import options
+
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions as EC, wait
 
 from selenium.webdriver.firefox.service import Service
 from webdriver_manager.firefox import GeckoDriverManager
@@ -39,12 +35,31 @@ from webdriver_manager.firefox import GeckoDriverManager
 # alert_is_present
 
 results = []
+shirt_title_results: list = []
+artist_title_results: list = []
+sales_price_results: list = []
+main_screen = None
+
+driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()))
 
 
-def redbubble_search():
-    driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()))
+def close_iframe(driver):
+    # closes iframe pop up box
+    WebDriverWait(driver, 20).until(
+        EC.frame_to_be_available_and_switch_to_it(
+            (By.ID, 'lightbox-iframe-9d8cb083-db92-488b-9101-eff3183f4a23'))
+    )
+    close_lightbox = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.ID, 'button2'))
+    )
+    close_lightbox.click()
+
+    driver.switch_to.parent_frame()
+
+
+def redbubble_search(driver, key_phrase: str):
+
     url: str = 'https://www.redbubble.com'
-    key_phrase: str = 'robot art'
 
     driver.get(url)
 
@@ -55,19 +70,33 @@ def redbubble_search():
     search_query.send_keys(key_phrase)
 
     search_query.send_keys(Keys.ENTER)
-    # driver.switchTo().alert().dismiss()
 
     title_text = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, 'SearchResults'))
     )
     results.append(title_text.text)
 
+    close_iframe(driver)
+
+    grid_of_results = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.ID, 'SearchResultsGrid'))
+    )
+
+    # result_anchors = driver.find_elements(By.XPATH, '//*[@id="app"]/div[1]/div/div[4]/div/div/div/div[2]/div[2]/div[2]/div/div[1]/div/div[1]/div[2]/div/a/div/div[3]/div/div[1]/span')
+    shirt_titles = grid_of_results.find_elements(
+        By.XPATH, '//a/div/div[3]/div/div[1]/span')
+
+    # shirt_titles = grid_of_results.find_elements(By.CSS_SELECTOR, 'span')
+
+    for shirt_title in shirt_titles:
+        shirt_title_results.append(shirt_title.text)
+
     sleep(3)
 
     driver.quit()
 
 
-redbubble_search()
+redbubble_search(driver=driver, key_phrase='robot art')
 
 
 sleep(1)
@@ -75,3 +104,4 @@ print('---------------')
 print('my findings are.')
 for finds in results:
     print(finds)
+    print(shirt_title_results)
