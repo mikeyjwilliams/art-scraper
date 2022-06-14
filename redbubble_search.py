@@ -50,7 +50,7 @@ back to parent frame to resume.
 '''
 
 
-def close_iframe(driver):
+def close_iframe(driver: webdriver.Firefox):
     # closes iframe pop up box
     WebDriverWait(driver, 20).until(
         EC.frame_to_be_available_and_switch_to_it(
@@ -64,7 +64,7 @@ def close_iframe(driver):
     driver.switch_to.parent_frame()
 
 
-def redbubble_search(driver, key_phrase: str):
+def redbubble_search(driver: webdriver.Firefox, key_phrase: str):
 
     url: str = 'https://www.redbubble.com'
 
