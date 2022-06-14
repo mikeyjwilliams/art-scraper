@@ -42,6 +42,13 @@ main_screen = None
 
 driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()))
 
+'''
+close_iframe
+iframe offer appears after about 6 - 10 seconds
+close_iframe switches to iframe closes and switches
+back to parent frame to resume.
+'''
+
 
 def close_iframe(driver):
     # closes iframe pop up box
