@@ -36,7 +36,7 @@ from webdriver_manager.firefox import GeckoDriverManager
 
 results = []
 shirt_title_results: list = []
-artist_title_results: list = []
+artist_name_results: list = []
 sales_price_results: list = []
 main_screen = None
 
@@ -82,7 +82,12 @@ def redbubble_search(driver, key_phrase: str):
         EC.presence_of_element_located((By.ID, 'SearchResultsGrid'))
     )
 
-    # result_anchors = driver.find_elements(By.XPATH, '//*[@id="app"]/div[1]/div/div[4]/div/div/div/div[2]/div[2]/div[2]/div/div[1]/div/div[1]/div[2]/div/a/div/div[3]/div/div[1]/span')
+    '''
+    Design Title pull
+    pulls all design titles
+    appends to array -> shirt_title_results
+    
+    '''
     shirt_titles = grid_of_results.find_elements(
         By.XPATH, '//a/div/div[3]/div/div[1]/span')
 
@@ -90,6 +95,14 @@ def redbubble_search(driver, key_phrase: str):
 
     for shirt_title in shirt_titles:
         shirt_title_results.append(shirt_title.text)
+
+    artist_names = grid_of_results.find_elements(
+        By.XPATH, '//a/div/div[3]/div/div[1]/div/span')
+
+    for artist_name in artist_names:
+        name = artist_name.text
+        fix_name = name.replace('By ', '').strip()
+        artist_name_results.append(fix_name)
 
     sleep(3)
 
@@ -105,3 +118,4 @@ print('my findings are.')
 for finds in results:
     print(finds)
     print(shirt_title_results)
+    print(artist_name_results)
