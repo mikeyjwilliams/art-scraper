@@ -96,6 +96,13 @@ def redbubble_search(driver, key_phrase: str):
     for shirt_title in shirt_titles:
         shirt_title_results.append(shirt_title.text)
 
+    '''
+    Artists names
+    pulls artists names to be collected in
+    -> artist_name_results array
+    replaces string 'by ' and strips() whitespace
+    from name prior to appending data.
+    '''
     artist_names = grid_of_results.find_elements(
         By.XPATH, '//a/div/div[3]/div/div[1]/div/span')
 
