@@ -118,6 +118,14 @@ def redbubble_search(driver: webdriver.Firefox, key_phrase: str):
         fix_name = name.replace('By ', '').strip()
         artist_name_results.append(fix_name)
 
+    prices = grid_of_results.find_elements(
+        By.XPATH, '//a[1]/div/div[3]/div/div[2]/div/div/span/span/span')
+    
+    for price in prices:
+        sales_price_results.append(price.text)
+        
+    
+
     sleep(3)
 
     driver.quit()
@@ -133,3 +141,4 @@ for finds in results:
     print(finds)
     print(shirt_title_results)
     print(artist_name_results)
+    print(sales_price_results)
