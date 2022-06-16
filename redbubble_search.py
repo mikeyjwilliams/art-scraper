@@ -36,12 +36,6 @@ from pages.result import RedBubbleResultPage
 # element_located_selection_state_to_be
 # alert_is_present
 
-results = []
-shirt_title_results: list = []
-artist_name_results: list = []
-sales_price_results: list = []
-main_screen = None
-
 
 '''
 close_iframe
