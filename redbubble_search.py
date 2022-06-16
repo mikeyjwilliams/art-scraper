@@ -65,10 +65,12 @@ def close_iframe(driver: webdriver.Firefox):
 
 
 def redbubble_search(driver: webdriver.Firefox, key_phrase: str):
+    '''
+    URL will direct too for scraping of data in function.
+    '''
+    URL: str = 'https://www.redbubble.com'
 
-    url: str = 'https://www.redbubble.com'
-
-    driver.get(url)
+    driver.get(URL)
 
     search_query = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.NAME, 'query'))
@@ -120,11 +122,9 @@ def redbubble_search(driver: webdriver.Firefox, key_phrase: str):
 
     prices = grid_of_results.find_elements(
         By.XPATH, '//a[1]/div/div[3]/div/div[2]/div/div/span/span/span')
-    
+
     for price in prices:
         sales_price_results.append(price.text)
-        
-    
 
     sleep(3)
 
