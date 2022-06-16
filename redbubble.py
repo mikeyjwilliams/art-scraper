@@ -35,3 +35,5 @@ def close_browser(driver):
 
 driver = browser()
 driver.get(BASE_URL)
+sleep(3)
+close_browser(driver=driver)
