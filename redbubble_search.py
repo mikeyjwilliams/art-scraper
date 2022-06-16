@@ -8,7 +8,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC, wait
 
 
-from utils.utility import Browsers
+from utils.utility import firefox_browser_open
+from utils.utility import close_iframe
 from pages.result import RedBubbleResultPage
 
 # ENVIRONMENTAL VARIABLES
@@ -50,21 +51,7 @@ back to parent frame to resume.
 '''
 
 
-def close_iframe(browser):
-    # closes iframe pop up box
-    WebDriverWait(browser, 20).until(
-        EC.frame_to_be_available_and_switch_to_it(
-            (By.ID, 'lightbox-iframe-9d8cb083-db92-488b-9101-eff3183f4a23'))
-    )
-    close_lightbox = WebDriverWait(browser, 10).until(
-        EC.presence_of_element_located((By.ID, 'button2'))
-    )
-    close_lightbox.click()
-
-    browser.switch_to.parent_frame()
-
-
-browser = Browsers.firefox_browser(Browsers)
+browser = firefox_browser_open()
 
 
 def redbubble_search(browser, key_phrase: str):
