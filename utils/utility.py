@@ -2,28 +2,13 @@ from time import sleep
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 # from selenium.webdriver.firefox.service import Service
 # from webdriver_manager.firefox import GeckoDriverManager
-
 # custom imports
 from utils.Data import Data
-
-
-browser = webdriver.Firefox
-
-
-class Browser:
-
-
-def firefox_browser_open():
-    driver =
-
-
-def close_browser():
-    browser.close()
-    browser.quit()
 
 
 def close_iframe(browser):
@@ -38,3 +23,12 @@ def close_iframe(browser):
     close_lightbox.click()
 
     browser.switch_to.parent_frame()
+
+
+class Base:
+    def __init__(self, driver):
+        self.driver = driver
+
+    def click(self, locator):
+        WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located(locator)).click()
