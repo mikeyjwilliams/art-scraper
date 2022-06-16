@@ -8,7 +8,6 @@ from selenium.webdriver.support import expected_conditions as EC
 # from selenium.webdriver.firefox.service import Service
 # from webdriver_manager.firefox import GeckoDriverManager
 # custom imports
-from utils.Data import Data
 
 
 def close_iframe(browser):
