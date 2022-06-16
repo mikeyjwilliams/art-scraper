@@ -2,7 +2,6 @@
 import env.env
 
 
-class Data:
-    FIREFOX_EXECUTABLE = env.env.EXECUTABLE_PATH
+def data():
     BASE_URL = 'https://redbubble.com'
     SEARCH_TERM = 'artwork'
