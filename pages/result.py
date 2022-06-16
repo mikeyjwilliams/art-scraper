@@ -2,7 +2,7 @@ from selenium.webdriver.common.by import By
 
 
 class RedBubbleResultPage:
-    LINK_DIVS = (By.CSS_SELECTOR_, '#SearchResultsGrid > a')
+    LINK_DIVS = (By.CSS_SELECTOR, '#SearchResultsGrid > a')
     SEARCH_BAR = (By.XPATH, '//form/input')
 
     @classmethod
