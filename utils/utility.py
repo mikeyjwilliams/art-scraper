@@ -31,3 +31,11 @@ class Base:
     def click(self, locator):
         WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located(locator)).click()
+
+    def assert_el_text(self, locator, el_text):
+        web_el = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_all_elements_located(locator))
+        assert web_el == el_text
+
+    def enter_text(self, locator, text):
+        return WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator))
