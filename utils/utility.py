@@ -38,4 +38,4 @@ class Base:
         assert web_el == el_text
 
     def enter_text(self, locator, text):
-        return WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator))
+        return WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator)).send_keys(text)
