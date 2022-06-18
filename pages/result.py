@@ -6,11 +6,11 @@ from selenium.webdriver.support import expected_conditions as EC, wait
 
 class RedBubbleResultPage:
     LINK_DIVS = (By.CSS_SELECTOR, '#SearchResultsGrid > a')
-    SEARCH_BAR = (By.XPATH, '//form/input')
+    SEARCH_BAR = (By.TAG_NAME, 'input')
 
     @classmethod
     def PHRASE_RESULTS(cls, phrase):
-        xpath = f"//form/input//*[contains(text(),'{phrase}')]"
+        xpath = f"//input//*[contains(text(),'{phrase}')]"
         return (By.XPATH, xpath)
 
     def __init__(self, browser):
