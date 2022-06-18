@@ -1,3 +1,4 @@
 # env examples
 
-GH_TOKEN =
+# in .env file
+GH_TOKEN = None

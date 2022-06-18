@@ -1,8 +1,11 @@
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC, wait
 
 
 class RedBubbleResultPage:
-    LINK_DIVS = (By.CSS_SELECTOR_, '#SearchResultsGrid > a')
+    LINK_DIVS = (By.CSS_SELECTOR, '#SearchResultsGrid > a')
     SEARCH_BAR = (By.XPATH, '//form/input')
 
     @classmethod

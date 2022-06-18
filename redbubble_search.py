@@ -7,13 +7,15 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC, wait
 
-from selenium.webdriver.firefox.service import Service
-from webdriver_manager.firefox import GeckoDriverManager
+
+from utils.utility import firefox_browser_open
+from utils.utility import close_iframe
+from pages.result import RedBubbleResultPage
 
 # ENVIRONMENTAL VARIABLES
 # from ENV import env
 
-#   element = WebDriverWait(driver, 10).until(
+#   element = WebDriverWait(browser, 10).until(
 #         EC.presence_of_element_located((By.ID, "myDynamicElement"))
 # )
 # title_is
@@ -34,13 +36,6 @@ from webdriver_manager.firefox import GeckoDriverManager
 # element_located_selection_state_to_be
 # alert_is_present
 
-results = []
-shirt_title_results: list = []
-artist_name_results: list = []
-sales_price_results: list = []
-main_screen = None
-
-driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()))
 
 '''
 close_iframe
@@ -50,29 +45,12 @@ back to parent frame to resume.
 '''
 
 
-def close_iframe(driver: webdriver.Firefox):
-    # closes iframe pop up box
-    WebDriverWait(driver, 20).until(
-        EC.frame_to_be_available_and_switch_to_it(
-            (By.ID, 'lightbox-iframe-9d8cb083-db92-488b-9101-eff3183f4a23'))
-    )
-    close_lightbox = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.ID, 'button2'))
-    )
-    close_lightbox.click()
-
-    driver.switch_to.parent_frame()
+browser = firefox_browser_open()
 
 
-def redbubble_search(driver: webdriver.Firefox, key_phrase: str):
-    '''
-    URL will direct too for scraping of data in function.
-    '''
-    URL: str = 'https://www.redbubble.com'
+def redbubble_search(browser, key_phrase: str):
 
-    driver.get(URL)
-
-    search_query = WebDriverWait(driver, 10).until(
+    search_query = WebDriverWait(browser, 10).until(
         EC.presence_of_element_located((By.NAME, 'query'))
     )
     search_query.click()
@@ -80,14 +58,14 @@ def redbubble_search(driver: webdriver.Firefox, key_phrase: str):
 
     search_query.send_keys(Keys.ENTER)
 
-    title_text = WebDriverWait(driver, 10).until(
+    title_text = WebDriverWait(browser, 10).until(
         EC.presence_of_element_located((By.ID, 'SearchResults'))
     )
     results.append(title_text.text)
 
-    close_iframe(driver)
+    close_iframe(browser)
 
-    grid_of_results = WebDriverWait(driver, 10).until(
+    grid_of_results = WebDriverWait(browser, 10).until(
         EC.presence_of_element_located((By.ID, 'SearchResultsGrid'))
     )
 
@@ -128,10 +106,8 @@ def redbubble_search(driver: webdriver.Firefox, key_phrase: str):
 
     sleep(3)
 
-    driver.quit()
 
-
-redbubble_search(driver=driver, key_phrase='robot art')
+redbubble_search(browser=browser, key_phrase='robot art')
 
 
 sleep(1)
