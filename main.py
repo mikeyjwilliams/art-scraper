@@ -6,7 +6,7 @@ from selenium.webdriver.chrome.service import Service
 
 from utils.Data import BASE_URL
 
-
+from utils.browser import browser, close_browser
 from utils.utility import close_iframe
 from pages.result import RedBubbleResultPage
 
@@ -16,18 +16,6 @@ shirt_title_results: list = []
 artist_name_results: list = []
 sales_price_results: list = []
 main_screen = None
-
-
-def browser():
-
-    driver = webdriver.Chrome()
-    return driver
-
-
-def close_browser(driver):
-
-    driver.close()
-    driver.quit()
 
 
 driver = browser()
