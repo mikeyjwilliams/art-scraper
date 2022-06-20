@@ -1,16 +1,16 @@
 from time import sleep
-import chromedriver_autoinstaller
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
 
 from utils.Data import BASE_URL
 
-from utils.browser import browser, close_browser
+from utils.browser import Browser
 from utils.utility import close_iframe
-from pages.result import RedBubbleResultPage
+from pages.homepage import HomePage
 
-chromedriver_autoinstaller.install()
+
 results = []
 shirt_title_results: list = []
 artist_name_results: list = []
@@ -20,11 +20,13 @@ main_screen = None
 
 def search():
 
-    driver = browser()
-    driver.get(BASE_URL)
+    web_open = Browser(driver=Browser)
+    runner = web_open.browser()
+    runner.get(BASE_URL)
     sleep(3)
-    close_browser(driver=driver)
+    web_open.close_browser()
 
 
 if __name__ == '__main__':
     search()
+    # HomePage.search()
