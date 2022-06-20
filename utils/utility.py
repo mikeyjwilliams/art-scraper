@@ -29,6 +29,10 @@ class Base:
         self.driver = driver
 
     def click(self, locator):
+        '''
+        function: click
+        description: locator variable decides where to click
+        '''
         WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located(locator)).click()
 
@@ -39,3 +43,26 @@ class Base:
 
     def enter_text(self, locator, text):
         return WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator)).send_keys(text)
+
+    def search_input(self, text):
+        return WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "form[role='search'] input[type='text']")))
+    
+    def find_search_bar(self):
+        '''
+        function: find_search_bar
+        Description: finds search bard by css selector `input` and search or text.
+        Args:
+            None
+        Returns:
+            found
+        
+        '''
+        found = None
+        input_search = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, f"input [type='search']")))
+        input_text = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, f"input [type='text']")))
+        if input_search is True:
+            found = input_search
+        else:
+            found = input_text
+        return found
+    
