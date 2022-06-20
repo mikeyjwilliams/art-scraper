@@ -18,7 +18,13 @@ sales_price_results: list = []
 main_screen = None
 
 
-driver = browser()
-driver.get(BASE_URL)
-sleep(3)
-close_browser(driver=driver)
+def search():
+
+    driver = browser()
+    driver.get(BASE_URL)
+    sleep(3)
+    close_browser(driver=driver)
+
+
+if __name__ == '__main__':
+    search()
