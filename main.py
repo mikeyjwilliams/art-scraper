@@ -23,7 +23,8 @@ def search():
     web_open = Browser(driver=Browser)
     runner = web_open.browser()
     runner.get(BASE_URL)
-    sleep(3)
+    sleep(10)
+
     web_open.close_browser()
 
 
