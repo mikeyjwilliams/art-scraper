@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from utils.browser import Browser
 # from selenium.webdriver.firefox.service import Service
 # from webdriver_manager.firefox import GeckoDriverManager
 # custom imports
@@ -46,7 +47,7 @@ class Base:
 
     def search_input(self, text):
         return WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "form[role='search'] input[type='text']")))
-    
+
     def find_search_bar(self):
         '''
         function: find_search_bar
@@ -55,14 +56,15 @@ class Base:
             None
         Returns:
             found
-        
+
         '''
         found = None
-        input_search = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, f"input [type='search']")))
-        input_text = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, f"input [type='text']")))
+        input_search = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, f"input [type='search']")))
+        input_text = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, f"input [type='text']")))
         if input_search is True:
             found = input_search
         else:
             found = input_text
         return found
-    
